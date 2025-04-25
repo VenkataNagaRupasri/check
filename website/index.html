@@ -40,9 +40,91 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <link rel="stylesheet" href="./src/style.css" />
-  </head>
+  
+<style>
+  #hero-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(-45deg, #0f0c29, #302b63, #24243e, #ff0066);
+    background-size: 400% 400%;
+    animation: bgWave 12s ease infinite;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    z-index: 9999;
+    transition: opacity 1s ease;
+  }
+
+  #hero-card {
+    width: 280px;
+    height: 280px;
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 0 40px 15px rgba(255, 255, 255, 0.2);
+    animation: spinGlow 5s linear infinite;
+    cursor: pointer;
+    text-align: center;
+  }
+
+  #hero-card h1 {
+    font-size: 1.6rem;
+    font-weight: bold;
+    background: linear-gradient(to right, #0ff, #f0f, #ff0);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: flicker 1.5s infinite alternate;
+  }
+
+  #hero-card p {
+    color: #fff;
+    font-size: 1rem;
+    margin-top: 10px;
+    opacity: 0.8;
+  }
+
+  #hero-container.fade-out {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  @keyframes spinGlow {
+    0% { transform: rotate(0deg); box-shadow: 0 0 20px 5px #0ff; }
+    50% { transform: rotate(180deg); box-shadow: 0 0 40px 15px #ff0; }
+    100% { transform: rotate(360deg); box-shadow: 0 0 20px 5px #f0f; }
+  }
+
+  @keyframes flicker {
+    0% { text-shadow: 0 0 5px #fff; }
+    100% { text-shadow: 0 0 20px #ff0, 0 0 30px #0ff; }
+  }
+
+  @keyframes bgWave {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+</style>
+
+</head>
 
   <body>
+
+<!-- Hero Launch Animation -->
+<div id="hero-container">
+  <div id="hero-card">
+    <h1>🎯 Campus Navigator</h1>
+    <p>Tap to Launch</p>
+  </div>
+</div>
+
     <!-- Add Event Form -->
     <button id="showFormBtn">➕ Add Event</button>
     <form id="eventForm" style="display: none;">
@@ -133,5 +215,19 @@
         document.getElementById("showFormBtn").style.display = "none";
       });
     </script>
-  </body>
+  
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const card = document.getElementById("hero-card");
+    const container = document.getElementById("hero-container");
+    card.addEventListener("click", () => {
+      container.classList.add("fade-out");
+      setTimeout(() => {
+        container.style.display = "none";
+      }, 1000);
+    });
+  });
+</script>
+
+</body>
 </html>
